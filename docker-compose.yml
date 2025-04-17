@@ -1,0 +1,35 @@
+services:
+  # Spring Boot API service
+  backend-api:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: security-backend-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_dev_fse?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345678
+
+    depends_on:
+      - dev-mysql-db
+
+  # MySQL service
+  dev-mysql-db:
+    profiles: ["dev","prod"]
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: db_dev_fse
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+# Volumes for persistence
+volumes:
+  mysql_data:
