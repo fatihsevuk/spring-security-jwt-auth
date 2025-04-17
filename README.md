@@ -95,4 +95,5 @@ docker compose down
 📬 Contact
 
 Made with ❤️ by Fatih Sevük
+
 Feel free to reach out for collaboration or feedback.
